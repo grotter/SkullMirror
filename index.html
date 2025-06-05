@@ -1,16 +1,5 @@
-<!-- Copyright 2022 Google LLC. All Rights Reserved.
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================-->
 <!DOCTYPE html>
-<html>
+<html class="model-loading">
 
 <head>
   <meta charset="utf-8">
@@ -18,6 +7,7 @@ limitations under the License.
   <style>
     
     body {
+      font-family: monospace;
       margin: 0;
       background-color: rgba(0,0,0,.3);
     }
@@ -33,19 +23,13 @@ limitations under the License.
       height: 80px;
     }
 
-    #main {
-      position: relative;
-      margin: 0;
-    }
-
-    #main, canvas {
+    canvas {
       float: left;
       width: 50%;
     }
 
-    h1 {
+    h2 {
       font-size: 12px;
-      font-family: monospace;
       line-height: 1;
       padding: 1em;
       position: absolute;
@@ -53,17 +37,38 @@ limitations under the License.
       right: 0;
     }
 
+    #loader {
+      padding: 1em;
+      display: none;
+    }
+
+    .model-loading #loader {
+      display: block;
+    }
+
+    .model-loading #app {
+      display: none;
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="stats"></div>
-  <div class="canvas-wrapper">
-    <canvas id="output"></canvas>
-    <video id="video" playsinline></video>
+
+  <h1 id="loader">Loading <span id="per">0</span>%</h1>
+  <div id="app">
+    <div id="stats"></div>
+    
+    <div class="canvas-wrapper">
+      <canvas id="output"></canvas>
+      <video id="video" playsinline></video>
+    </div>
+    
+    <h2 id="rotation"></h2>
   </div>
-  <h1 id="rotation"></h1>
+
 </body>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
 <script src="src/index.js"></script>

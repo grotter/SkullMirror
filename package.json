@@ -22,7 +22,7 @@
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url /SkullMirror/",
-    "postbuild": "rm -R docs && mkdir docs && mv ./dist/* docs && cp -r ./static/* ./docs/",
+    "postbuild": "rm -R docs && mkdir docs && mv ./dist/* docs",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build",
     "link-core": "yalc link @tensorflow/tfjs-core",

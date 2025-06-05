@@ -15,6 +15,19 @@ export class Camera {
     this.loadModel();
   }
 
+  onModelLoadProgress(xhr) {
+    if (xhr.lengthComputable) {
+      let percentComplete = (xhr.loaded / xhr.total) * 100;
+      if (percentComplete > 100) percentComplete = 100;
+
+      document.getElementById('per').innerHTML = Math.round(percentComplete).toString();
+
+      if (xhr.loaded >= xhr.total) {
+        document.getElementsByTagName('html')[0].classList.remove('model-loading');
+      }
+    }
+  }
+
   loadModel() {
     // setup three.js scene, camera and renderer
     const scene = new THREE.Scene();
@@ -34,14 +47,14 @@ export class Camera {
     const loader = new GLTFLoader();
     let inst = this;
 
-    loader.load('elephant.glb', function (gltf) {
+    loader.load('https://s3.us-west-2.amazonaws.com/files.calacademy.org/3d/elephant.glb', function (gltf) {
         inst.model = gltf.scene;
 
         // flip model vertically
         inst.model.scale.y *= -1; 
 
         // add to DOM
-        document.body.appendChild(renderer.domElement);
+        document.getElementById('app').appendChild(renderer.domElement);
         
         // remove inline style
         renderer.domElement.style = '';
@@ -55,7 +68,7 @@ export class Camera {
         }
 
         animate();
-    });
+    }, this.onModelLoadProgress);
   }
 
   /**
@@ -173,7 +186,7 @@ export class Camera {
     if (!this.model) return;
 
     const rotation = this.getCalculatedRotation(faces[0].keypoints);
-    document.getElementById('rotation').innerText = `x: ${rotation.x.toFixed(2)}, y: ${rotation.y.toFixed(2)}, z: ${rotation.z.toFixed(2)}`;
+    document.getElementById('rotation').innerText = `x: ${rotation.x.toFixed(5)}, y: ${rotation.y.toFixed(5)}, z: ${rotation.z.toFixed(5)}`;
 
     // Normalize angles to range [-π, π]
     const normalizeAngle = (angle) => {
